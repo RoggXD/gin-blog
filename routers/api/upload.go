@@ -10,6 +10,11 @@ import (
 	"github.com/RoggXD/gin-blog/pkg/upload"
 )
 
+// @Summary Import Image
+// @Produce  json
+// @Param image formData file true "Image File"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Router /api/v1/tags/import [post]
 func UploadImage(c *gin.Context) {
 	code := e.SUCCESS
 	data := make(map[string]string)

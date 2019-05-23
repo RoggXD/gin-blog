@@ -15,11 +15,10 @@ import (
 	"github.com/RoggXD/gin-blog/pkg/util"
 )
 
-// @Summary Get a single article
+// @Summary 获取单个文章
 // @Produce  json
-// @Param id path int true "ID"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Param id param int true "ID"
+// @Success 200 {string} json "{"code":200,"data":{"id":3,"created_on":1516937037,"modified_on":0,"tag_id":11,"tag":{"id":11,"created_on":1516851591,"modified_on":0,"name":"312321","created_by":"4555","modified_by":"","state":1},"content":"5555","created_by":"2412","modified_by":"","state":1},"msg":"ok"}"
 // @Router /api/v1/articles/{id} [get]
 func GetArticle(c *gin.Context) {
     id := com.StrTo(c.Param("id")).MustInt()
@@ -49,13 +48,12 @@ func GetArticle(c *gin.Context) {
     })
 }
 
-// @Summary Get multiple articles
+// @Summary 获取多个文章
 // @Produce  json
-// @Param tag_id body int false "TagID"
-// @Param state body int false "State"
-// @Param created_by body int false "CreatedBy"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Param tag_id query int false "TagID"
+// @Param state query int false "State"
+// @Param created_by query int false "CreatedBy"
+// @Success 200 {string} json "{"code":200,"data":[{"id":3,"created_on":1516937037,"modified_on":0,"tag_id":11,"tag":{"id":11,"created_on":1516851591,"modified_on":0,"name":"312321","created_by":"4555","modified_by":"","state":1},"content":"5555","created_by":"2412","modified_by":"","state":1}],"msg":"ok"}"
 // @Router /api/v1/articles [get]
 func GetArticles(c *gin.Context) {
     data := make(map[string]interface{})
@@ -98,16 +96,25 @@ func GetArticles(c *gin.Context) {
     })
 }
 
-// @Summary Add article
+type AddArticleForm struct {
+	TagID         int    `form:"tag_id" valid:"Required;Min(1)"`
+	Title         string `form:"title" valid:"Required;MaxSize(100)"`
+	Desc          string `form:"desc" valid:"Required;MaxSize(255)"`
+	Content       string `form:"content" valid:"Required;MaxSize(65535)"`
+	CreatedBy     string `form:"created_by" valid:"Required;MaxSize(100)"`
+	CoverImageUrl string `form:"cover_image_url" valid:"Required;MaxSize(255)"`
+	State         int    `form:"state" valid:"Range(0,1)"`
+}
+
+// @Summary 新增文章
 // @Produce  json
-// @Param tag_id body int true "TagID"
-// @Param title body string true "Title"
-// @Param desc body string true "Desc"
-// @Param content body string true "Content"
-// @Param created_by body string true "CreatedBy"
-// @Param state body int true "State"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Param tag_id query int true "TagID"
+// @Param title query string true "Title"
+// @Param desc query string true "Desc"
+// @Param content query string true "Content"
+// @Param created_by query string true "CreatedBy"
+// @Param state query int true "State"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/articles [post]
 func AddArticle(c *gin.Context) {
     tagId := com.StrTo(c.Query("tag_id")).MustInt()
@@ -154,17 +161,28 @@ func AddArticle(c *gin.Context) {
     })
 }
 
-// @Summary Update article
+type EditArticleForm struct {
+	ID            int    `form:"id" valid:"Required;Min(1)"`
+	TagID         int    `form:"tag_id" valid:"Required;Min(1)"`
+	Title         string `form:"title" valid:"Required;MaxSize(100)"`
+	Desc          string `form:"desc" valid:"Required;MaxSize(255)"`
+	Content       string `form:"content" valid:"Required;MaxSize(65535)"`
+	ModifiedBy    string `form:"modified_by" valid:"Required;MaxSize(100)"`
+	CoverImageUrl string `form:"cover_image_url" valid:"Required;MaxSize(255)"`
+	State         int    `form:"state" valid:"Range(0,1)"`
+}
+
+// @Summary 修改文章
 // @Produce  json
-// @Param id path int true "ID"
-// @Param tag_id body string false "TagID"
-// @Param title body string false "Title"
-// @Param desc body string false "Desc"
-// @Param content body string false "Content"
-// @Param modified_by body string true "ModifiedBy"
-// @Param state body int false "State"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Param id param int true "ID"
+// @Param tag_id query string false "TagID"
+// @Param title query string false "Title"
+// @Param desc query string false "Desc"
+// @Param content query string false "Content"
+// @Param modified_by query string true "ModifiedBy"
+// @Param state query int false "State"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 200 {string} json "{"code":400,"data":{},"msg":"请求参数错误"}"
 // @Router /api/v1/articles/{id} [put]
 func EditArticle(c *gin.Context) {
     valid := validation.Validation{}
@@ -230,11 +248,11 @@ func EditArticle(c *gin.Context) {
     })
 }
 
-// @Summary Delete article
+// @Summary 删除文章
 // @Produce  json
-// @Param id path int true "ID"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Param id param int true "ID"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 200 {string} json "{"code":400,"data":{},"msg":"请求参数错误"}"
 // @Router /api/v1/articles/{id} [delete]
 func DeleteArticle(c *gin.Context) {
     id := com.StrTo(c.Param("id")).MustInt()

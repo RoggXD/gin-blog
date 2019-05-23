@@ -27,3 +27,4 @@ import:
   - swaggerFiles
 - package: github.com/robfig/cron
   version: ^3.0.0-rc1
+- package: github.com/alecthomas/template
