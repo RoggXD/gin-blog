@@ -1,10 +1,12 @@
-hash: 9fe7bb403d2a72445cfdfd0948f6e17dcf1a8cf41b4a3d835c8d4e2107c05b0d
-updated: 2019-05-22T17:35:02.836582+08:00
+hash: 2587b43f64aa22e2ba72626b02f876d3ea5de27067aef8565b1e1c0e3268a346
+updated: 2019-05-23T09:12:56.267432+08:00
 imports:
 - name: github.com/astaxie/beego
   version: 1b6edafc96ad27b6515fafeccd7339dda3e997b1
   subpackages:
   - validation
+- name: github.com/dgrijalva/jwt-go
+  version: 06ea1031745cb8b3dab3f6a236daf2b0aa468b7e
 - name: github.com/gin-contrib/sse
   version: 5545eab6dad3bbbd6c5ae9186383c2a9d23c0dae
 - name: github.com/gin-gonic/gin
