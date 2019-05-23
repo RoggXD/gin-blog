@@ -4,8 +4,8 @@ import (
     "github.com/astaxie/beego/validation"
     "net/http"
 
-    "github.com/gin-gonic/gin"
     "github.com/Unknwon/com"
+    "github.com/gin-gonic/gin"
 
     "github.com/RoggXD/gin-blog/models"
     "github.com/RoggXD/gin-blog/pkg/e"
@@ -30,7 +30,7 @@ func GetTags(c *gin.Context) {
         maps["name"] = name
     }
 
-    var state int = -1
+    var state = -1
     if arg := c.Query("state"); arg != "" {
         state = com.StrTo(arg).MustInt()
         maps["state"] = state
@@ -38,7 +38,7 @@ func GetTags(c *gin.Context) {
 
     code := e.SUCCESS
 
-    data["lists"] = models.GetTags(util.GetPage(c), setting.PageSize, maps)
+    data["lists"] = models.GetTags(util.GetPage(c), setting.AppSetting.PageSize, maps)
     data["total"] = models.GetTagTotal(maps)
 
     c.JSON(http.StatusOK, gin.H{
@@ -101,7 +101,7 @@ func EditTag(c *gin.Context) {
 
     valid := validation.Validation{}
 
-    var state int = -1
+    var state = -1
     if arg := c.Query("state"); arg != "" {
         state = com.StrTo(arg).MustInt()
         valid.Range(state, 0, 1, "state").Message("状态只允许0或1")
