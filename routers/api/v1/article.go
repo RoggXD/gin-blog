@@ -1,8 +1,9 @@
 package v1
 
 import (
-	"log"
-	"net/http"
+	"github.com/RoggXD/gin-blog/pkg/logging"
+    "log"
+    "net/http"
 
 	"github.com/Unknwon/com"
 	"github.com/astaxie/beego/validation"
@@ -32,7 +33,7 @@ func GetArticle(c *gin.Context) {
         }
     } else {
         for _, err := range valid.Errors {
-            log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+            logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
         }
     }
 

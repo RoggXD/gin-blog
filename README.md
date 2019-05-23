@@ -6,6 +6,12 @@
 
 首先请执行 **[blog.sql](./blog.sql)** 创建项目数据库和表。
 
+获取 Token
+
+```bash
+http://host:8000/auth?username=test&password=test123456
+```
+
 ## 项目一级目录说明
 
 ``` sh

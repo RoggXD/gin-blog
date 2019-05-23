@@ -5,7 +5,6 @@ import (
     "net/http"
 
     "github.com/gin-gonic/gin"
-    //"github.com/astaxie/beego/validation"
     "github.com/Unknwon/com"
 
     "github.com/RoggXD/gin-blog/models"
